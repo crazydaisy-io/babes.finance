@@ -9,18 +9,17 @@ interface ToastProviderProps {
 }
 
 export default function ToastProvider({ children }: ToastProviderProps) {
-
   return (
     <>
       {children}
-      <ToastContainer 
-                  position="top-right"
-                  autoClose={5000}
-                  closeOnClick={true}
-                  pauseOnHover={true}
-                  draggable={true}
-                  theme={"dark"}
-                  transition={Bounce}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        closeOnClick={true}
+        pauseOnHover={true}
+        draggable={true}
+        theme={"dark"}
+        transition={Bounce}
       />
     </>
   );

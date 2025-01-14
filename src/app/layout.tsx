@@ -1,7 +1,7 @@
 import { Lato, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import ToastProvider from "@/config/toast";
-import {metadata} from "@/config/metadata";
+import { metadata } from "@/config/metadata";
 
 const lato = Lato({
   variable: "--font-lato",
@@ -14,7 +14,7 @@ const robotoMono = Roboto_Mono({
   subsets: ["latin"],
 });
 
-export { metadata }
+export { metadata };
 
 export default function RootLayout({
   children,
@@ -23,12 +23,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${lato.variable} ${robotoMono.variable} antialiased`}
-      >
-        <ToastProvider>
-          {children}
-        </ToastProvider>
+      <body className={`${lato.variable} ${robotoMono.variable} antialiased`}>
+        <ToastProvider>{children}</ToastProvider>
       </body>
     </html>
   );
