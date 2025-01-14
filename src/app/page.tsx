@@ -15,6 +15,7 @@ import Link from 'next/link';
 
 const geistSans = Agbalumo({
   variable: "--font-agbalumo",
+  subsets: ['latin'],
   weight: "400",
   style: "normal"
 });

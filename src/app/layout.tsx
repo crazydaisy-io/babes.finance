@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Lato, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import ToastProvider from "@/config/toast";
