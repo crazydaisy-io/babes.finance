@@ -1,8 +1,6 @@
 "use client"
 
-import { connection } from "@/config/solana";
 import { getBalance } from "@/lib/web3-requests";
-import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
