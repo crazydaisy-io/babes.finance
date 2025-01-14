@@ -1,7 +1,7 @@
 import { InputHTMLAttributes } from "react";
 
 interface IInput extends InputHTMLAttributes<HTMLInputElement> {
-  type?: "default";
+  variant?: "default";
 }
 
 export default function Input(props: IInput) {

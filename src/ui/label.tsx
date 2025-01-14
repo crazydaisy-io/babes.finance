@@ -1,7 +1,7 @@
 import { LabelHTMLAttributes } from "react";
 
 interface ILabel extends LabelHTMLAttributes<HTMLLabelElement> {
-  type?: "default";
+  variant?: "default";
 }
 
 export default function Label(props: ILabel) {
