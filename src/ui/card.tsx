@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from 'react';
 
 interface ICard extends HTMLAttributes<HTMLDivElement> {
   actions?: ReactNode;
@@ -13,7 +13,7 @@ interface ICard extends HTMLAttributes<HTMLDivElement> {
 export default function Card(props: ICard) {
   return (
     <div
-      className={`card bg-brand-white w-96 shadow-xl border border-neutral-300 ${props.className}`}
+      className={`card min-w-80 border border-neutral-300 bg-brand-white shadow-xl ${props.className}`}
     >
       {props.img ? (
         <figure>

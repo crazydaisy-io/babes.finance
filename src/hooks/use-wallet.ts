@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { getBalance } from "@/lib/web3-requests";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { getBalance } from '@/lib/web3-requests';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 export default function useWallet() {
   const [balance, setBalance] = useState(0);
-  const [walletAddress, setWalletAddress] = useState("");
+  const [walletAddress, setWalletAddress] = useState('');
   const [connecting, setConnecting] = useState(false);
 
   const connectWallet = async () => {
@@ -15,15 +15,17 @@ export default function useWallet() {
       const { solana } = window;
 
       if (!solana?.isPhantom) {
-        alert("Please install Phantom wallet!");
+        alert('Please install Phantom wallet!');
         return;
       }
 
       const response = await solana.connect();
-      setWalletAddress(response.publicKey.toString());
+      const address = response.publicKey.toString();
+      setBalance(await getBalance(address));
+      setWalletAddress(address);
     } catch (error) {
       console.error(error);
-      toast("User rejected wallet connection request", { type: "error" });
+      toast('User rejected wallet connection request', { type: 'error' });
     } finally {
       setConnecting(false);
     }
@@ -34,7 +36,7 @@ export default function useWallet() {
       const { solana } = window;
       if (solana) {
         await solana.disconnect();
-        setWalletAddress("");
+        setWalletAddress('');
       }
     } catch (error) {
       console.error(error);
@@ -45,15 +47,11 @@ export default function useWallet() {
     try {
       setBalance(await getBalance(address));
     } catch (error) {
-      console.error("Error getting balance:", error);
+      console.error('Error getting balance:', error);
     }
   };
 
-  useEffect(() => {
-    if (walletAddress) {
-      getWalletBalance(walletAddress);
-    }
-  }, [walletAddress]);
+  console.log('BALANCE:', balance);
 
   return {
     connectWallet,
