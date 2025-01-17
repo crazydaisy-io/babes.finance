@@ -4,20 +4,20 @@ import { getBalance } from '@/lib/web3-requests';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-const WALLET_PROVIDERS = {
-  Phantom: {
-    name: 'Phantom',
-    checkAvailable: () => window.solana?.isPhantom,
-    connect: async () => window?.solana?.connect(),
-    disconnect: async () => window?.solana?.disconnect(),
-  },
-  Solflare: {
-    name: 'Solflare',
-    checkAvailable: () => window.solflare?.isSolflare,
-    connect: async () => window.solflare?.connect(),
-    disconnect: async () => window.solflare?.disconnect(),
-  },
-};
+// const WALLET_PROVIDERS = {
+//   Phantom: {
+//     name: 'Phantom',
+//     checkAvailable: () => window.solana?.isPhantom,
+//     connect: async () => window?.solana?.connect(),
+//     disconnect: async () => window?.solana?.disconnect(),
+//   },
+//   Solflare: {
+//     name: 'Solflare',
+//     checkAvailable: () => window.solflare?.isSolflare,
+//     connect: async () => window.solflare?.connect(),
+//     disconnect: async () => window.solflare?.disconnect(),
+//   },
+// };
 
 export default function useWallet() {
   const [balance, setBalance] = useState(0);
