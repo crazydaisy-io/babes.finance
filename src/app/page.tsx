@@ -1,23 +1,23 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Wallet, Send, ExternalLink } from "lucide-react";
-import { multisig } from "@/config/solana";
-import { Agbalumo } from "next/font/google";
-import Card from "@/ui/card";
-import Button from "@/ui/button";
-import Label from "@/ui/label";
-import Input from "@/ui/input";
-import useWallet from "@/hooks/use-wallet";
-import useTransfer from "@/hooks/use-transfer";
-import { getExplorerLink, truncate } from "@/lib/string-helpers";
-import Link from "next/link";
+import React from 'react';
+import { Wallet, Send, ExternalLink } from 'lucide-react';
+import { multisig } from '@/config/solana';
+import { Agbalumo } from 'next/font/google';
+import Card from '@/ui/card';
+import Button from '@/ui/button';
+import Label from '@/ui/label';
+import Input from '@/ui/input';
+import useWallet from '@/hooks/use-wallet';
+import useTransfer from '@/hooks/use-transfer';
+import { getExplorerLink, truncate } from '@/lib/string-helpers';
+import Link from 'next/link';
 
 const geistSans = Agbalumo({
-  variable: "--font-agbalumo",
-  subsets: ["latin"],
-  weight: "400",
-  style: "normal",
+  variable: '--font-agbalumo',
+  subsets: ['latin'],
+  weight: '400',
+  style: 'normal',
 });
 
 export default function Home() {
@@ -35,15 +35,15 @@ export default function Home() {
     <div className="relative min-h-screen overflow-hidden bg-neutral-50">
       {/* Animated background elements */}
       <div className="absolute inset-0">
-        <div className="a bsolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-        <div className="absolute -bottom-8 right-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div className="a bsolute animate-blob -left-4 top-0 h-72 w-72 rounded-full bg-purple-500 opacity-70 mix-blend-multiply blur-xl filter"></div>
+        <div className="animate-blob absolute -bottom-8 right-20 h-72 w-72 rounded-full bg-blue-500 opacity-70 mix-blend-multiply blur-xl filter"></div>
       </div>
 
       {/* Mesh gradient overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-white/20 to-white"></div>
 
       {/* Content */}
-      <div className="relative flex flex-col gap-8 items-center justify-center min-h-screen p-4">
+      <div className="relative flex min-h-screen flex-col items-center justify-center gap-8 p-4">
         <h1 className={`text-5xl ${geistSans.className} text-brand-blue`}>
           Babes Finance
         </h1>
@@ -51,8 +51,8 @@ export default function Home() {
           <div className="space-y-6">
             {!walletAddress ? (
               <div className="text-center">
-                <p className="text-lg mb-4">
-                  Connect your wallet with the Solana or Base networks.
+                <p className="mb-4 text-lg">
+                  Connect your wallet with the Solana network.
                 </p>
                 <Button
                   onClick={connectWallet}
@@ -60,7 +60,7 @@ export default function Home() {
                   className="text-white"
                 >
                   <Wallet className="mr-1 h-4 w-4" />
-                  {connecting ? "Connecting..." : "Connect Wallet"}
+                  {connecting ? 'Connecting...' : 'Connect Wallet'}
                 </Button>
               </div>
             ) : (
@@ -89,7 +89,7 @@ export default function Home() {
                         <Link
                           href={getExplorerLink(multisig)}
                           target="_blank"
-                          className="flex gap-1 items-center transition duration-150 hover:text-brand-blue"
+                          className="flex items-center gap-1 transition duration-150 hover:text-brand-blue"
                         >
                           <p>{truncate(multisig)}</p>
                           <ExternalLink size={16} />
@@ -100,7 +100,7 @@ export default function Home() {
 
                   <div className="space-y-2">
                     <Label>
-                      <div className="flex justify-between items-center">
+                      <div className="flex items-center justify-between">
                         <p>Amount (SOL)</p>
                         <span className="text-black/40">
                           Balance: {balance}
@@ -119,12 +119,18 @@ export default function Home() {
 
                   <Button
                     onClick={handleTransfer}
-                    disabled={sending || !amount}
+                    disabled={sending || !amount || Number(amount) > balance}
                     className="w-full text-white"
                     // className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0"
                   >
                     <Send className="mr-1 h-4 w-4" />
-                    {sending ? "Sending..." : "Send Funds to Treasury"}
+                    {Number(amount) > balance
+                      ? 'Insufficient SOL'
+                      : sending
+                        ? 'Sending...'
+                        : !amount
+                          ? 'Input SOL amount'
+                          : 'Send Funds to Treasury'}
                   </Button>
                 </div>
               </div>

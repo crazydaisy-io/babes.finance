@@ -1,31 +1,31 @@
-"use client";
+'use client';
 
-import { connection, multisig } from "@/config/solana";
+import { connection, multisig } from '@/config/solana';
 import {
   LAMPORTS_PER_SOL,
   PublicKey,
   SystemProgram,
   Transaction,
-} from "@solana/web3.js";
-import { useState } from "react";
-import { toast } from "react-toastify";
+} from '@solana/web3.js';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 export default function useTransfer(walletAddress?: string) {
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState('');
   const [sending, setSending] = useState(false);
 
   const handleTransfer = async () => {
     if (!(amount && walletAddress)) {
-      alert("Please fill in all fields");
+      alert('Please fill in all fields');
       return;
     }
 
     try {
       setSending(true);
-      const { solana } = window;
+      const { solana, solflare } = window;
 
-      if (!solana) {
-        throw new Error("Solana object not found! Get Phantom wallet");
+      if (!(solana && solflare)) {
+        throw new Error('Solana object not found! Get Phantom wallet');
       }
 
       // Create transfer instruction
@@ -47,12 +47,12 @@ export default function useTransfer(walletAddress?: string) {
       const signature = await connection.sendRawTransaction(signed.serialize());
       await connection.confirmTransaction(signature);
 
-      alert("Transfer successful!");
-      setAmount("");
+      alert('Transfer successful!');
+      setAmount('');
     } catch (error) {
       console.error(error);
       toast(String(error), {
-        type: "error",
+        type: 'error',
       });
     } finally {
       setSending(false);
