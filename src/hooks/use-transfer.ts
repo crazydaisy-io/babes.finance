@@ -3,7 +3,9 @@
 import { connection, multisig } from '@/config/solana';
 import {
   LAMPORTS_PER_SOL,
+  Signer,
   PublicKey,
+  sendAndConfirmTransaction,
   SystemProgram,
   Transaction,
 } from '@solana/web3.js';
@@ -36,6 +38,11 @@ export default function useTransfer(walletAddress?: string) {
           lamports: LAMPORTS_PER_SOL * parseFloat(amount),
         }),
       );
+      // const signature = await sendAndConfirmTransaction(
+      //   connection,
+      //   transaction,
+      //   [new Signer(walletAddress)]
+      //  );
 
       // Get latest blockhash
       const { blockhash } = await connection.getRecentBlockhash();
@@ -43,6 +50,7 @@ export default function useTransfer(walletAddress?: string) {
       transaction.feePayer = new PublicKey(walletAddress);
 
       // Send transaction
+      console.log('TRANSACTION:', transaction);
       const signed = await solana.signTransaction(transaction);
       const signature = await connection.sendRawTransaction(signed.serialize());
       await connection.confirmTransaction(signature);

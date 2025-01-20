@@ -12,6 +12,7 @@ import useWallet from '@/hooks/use-wallet';
 import useTransfer from '@/hooks/use-transfer';
 import { getExplorerLink, truncate } from '@/lib/string-helpers';
 import Link from 'next/link';
+import { useWalletContext } from '@/contexts/wallet';
 
 const geistSans = Agbalumo({
   variable: '--font-agbalumo',
@@ -21,15 +22,9 @@ const geistSans = Agbalumo({
 });
 
 export default function Home() {
-  const {
-    connectWallet,
-    disconnectWallet,
-    balance,
-    connecting,
-    walletAddress,
-  } = useWallet();
-  const { amount, sending, setAmount, handleTransfer } =
-    useTransfer(walletAddress);
+  const { connectWallet, disconnectWallet, balance, isConnecting, address } =
+    useWalletContext();
+  const { amount, sending, setAmount, handleTransfer } = useTransfer(address);
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-neutral-50">
@@ -49,18 +44,18 @@ export default function Home() {
         </h1>
         <Card>
           <div className="space-y-6">
-            {!walletAddress ? (
+            {!address ? (
               <div className="text-center">
                 <p className="mb-4 text-lg">
                   Connect your wallet with the Solana network.
                 </p>
                 <Button
                   onClick={connectWallet}
-                  disabled={connecting}
+                  disabled={isConnecting}
                   className="text-white"
                 >
                   <Wallet className="mr-1 h-4 w-4" />
-                  {connecting ? 'Connecting...' : 'Connect Wallet'}
+                  {isConnecting ? 'Connecting...' : 'Connect Wallet'}
                 </Button>
               </div>
             ) : (
@@ -70,7 +65,7 @@ export default function Home() {
                     <p className="text-xs font-medium text-neutral-500">
                       Connected Wallet:
                     </p>
-                    <p className="font-bold">{truncate(walletAddress)}</p>
+                    <p className="font-bold">{truncate(address)}</p>
                   </div>
                   <Button
                     onClick={disconnectWallet}
