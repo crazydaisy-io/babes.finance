@@ -19,7 +19,7 @@ interface WalletContextValue {
   getWalletBalance: (address: string) => Promise<void>;
   updateWalletBalance: () => Promise<void>;
   isConnecting?: boolean;
-  isLoadingBalance?: Boolean;
+  isLoadingBalance?: boolean;
   isDisconnecting?: boolean;
 }
 
