@@ -8,9 +8,8 @@ import Card from '@/ui/card';
 import Button from '@/ui/button';
 import Label from '@/ui/label';
 import Input from '@/ui/input';
-import useWallet from '@/hooks/use-wallet';
 import useTransfer from '@/hooks/use-transfer';
-import { getExplorerLink, truncate } from '@/lib/string-helpers';
+import { getExplorerAddressLink, truncate } from '@/lib/string-helpers';
 import Link from 'next/link';
 import { useWalletContext } from '@/contexts/wallet';
 
@@ -82,7 +81,7 @@ export default function Home() {
                       <div className="flex items-center justify-between">
                         <p>Treasury (Multisig)</p>
                         <Link
-                          href={getExplorerLink(multisig)}
+                          href={getExplorerAddressLink(multisig)}
                           target="_blank"
                           className="flex items-center gap-1 transition duration-150 hover:text-brand-blue"
                         >
@@ -98,7 +97,7 @@ export default function Home() {
                       <div className="flex items-center justify-between">
                         <p>Amount (SOL)</p>
                         <span className="text-black/40">
-                          Balance: {balance}
+                          Balance: {balance.toFixed(4)}
                         </span>
                       </div>
                     </Label>

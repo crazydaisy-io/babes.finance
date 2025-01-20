@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import "react-toastify/dist/ReactToastify.css";
-import "../app/globals.css";
-import { Bounce, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import '../styles/globals.css';
+import { Bounce, ToastContainer } from 'react-toastify';
 
 interface ToastProviderProps {
   children: React.ReactNode;
@@ -14,11 +14,11 @@ export default function ToastProvider({ children }: ToastProviderProps) {
       {children}
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={6000}
         closeOnClick={true}
         pauseOnHover={true}
         draggable={true}
-        theme={"dark"}
+        theme={'light'}
         transition={Bounce}
       />
     </>

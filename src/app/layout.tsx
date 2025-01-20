@@ -1,5 +1,5 @@
 import { Lato, Roboto_Mono } from 'next/font/google';
-import './globals.css';
+import '../styles/globals.css';
 import ToastProvider from '@/config/toast';
 import { metadata } from '@/config/metadata';
 import WalletProvider from '@/contexts/wallet';

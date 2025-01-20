@@ -1,33 +1,37 @@
 'use client';
 
 import { connection, multisig } from '@/config/solana';
+import { useWalletContext } from '@/contexts/wallet';
+import { getExplorerTxLink } from '@/lib/string-helpers';
 import {
   LAMPORTS_PER_SOL,
-  Signer,
   PublicKey,
-  sendAndConfirmTransaction,
   SystemProgram,
   Transaction,
 } from '@solana/web3.js';
+import Link from 'next/link';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 export default function useTransfer(walletAddress?: string) {
+  const { updateWalletBalance } = useWalletContext();
+
   const [amount, setAmount] = useState('');
   const [sending, setSending] = useState(false);
 
   const handleTransfer = async () => {
     if (!(amount && walletAddress)) {
-      alert('Please fill in all fields');
+      toast('Please fill in all fields', { type: 'error' });
       return;
     }
 
     try {
       setSending(true);
-      const { solana, solflare } = window;
+      const { solana } = window;
 
-      if (!(solana && solflare)) {
-        throw new Error('Solana object not found! Get Phantom wallet');
+      if (!solana) {
+        toast('Phantom wallet connection not detected.', { type: 'error' });
+        return;
       }
 
       // Create transfer instruction
@@ -38,11 +42,6 @@ export default function useTransfer(walletAddress?: string) {
           lamports: LAMPORTS_PER_SOL * parseFloat(amount),
         }),
       );
-      // const signature = await sendAndConfirmTransaction(
-      //   connection,
-      //   transaction,
-      //   [new Signer(walletAddress)]
-      //  );
 
       // Get latest blockhash
       const { blockhash } = await connection.getRecentBlockhash();
@@ -55,7 +54,19 @@ export default function useTransfer(walletAddress?: string) {
       const signature = await connection.sendRawTransaction(signed.serialize());
       await connection.confirmTransaction(signature);
 
-      alert('Transfer successful!');
+      // Success State
+      toast(
+        <div className="flex items-center">
+          <p>
+            Transaction Success:{' '}
+            <Link href={`${getExplorerTxLink(signature)}`} target={'_blank'}>
+              View TX
+            </Link>
+          </p>
+        </div>,
+        { type: 'success' },
+      );
+      await updateWalletBalance();
       setAmount('');
     } catch (error) {
       console.error(error);

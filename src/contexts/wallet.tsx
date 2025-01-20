@@ -17,6 +17,7 @@ interface WalletContextValue {
   disconnectWallet: MouseEventHandler<HTMLButtonElement>;
   balance: number;
   getWalletBalance: (address: string) => Promise<void>;
+  updateWalletBalance: () => Promise<void>;
   isConnecting?: boolean;
   isLoadingBalance?: Boolean;
   isDisconnecting?: boolean;
@@ -117,6 +118,11 @@ const WalletProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const updateWalletBalance = async () => {
+    if (!walletAddress) return;
+    await getWalletBalance(walletAddress);
+  };
+
   return (
     <WalletContext.Provider
       value={{
@@ -128,6 +134,7 @@ const WalletProvider = ({ children }: { children: ReactNode }) => {
         isConnecting: connecting,
         isLoadingBalance: fetchingBalance,
         isDisconnecting: disconnecting,
+        updateWalletBalance,
       }}
     >
       {children}
