@@ -7,4 +7,4 @@ export const connection =
     : new Connection('https://api.devnet.solana.com', 'confirmed');
 
 // team multi-sig
-export const multisig = '2p37aZDwU7tqKnYw62PXdmbNF65uMp12opCdj9Z5H9og';
+export const multisig = '7UfPQt7Vr9yFx9EV6kGJaiFh5xyuFTMx3X3FDCqFLSVk';
